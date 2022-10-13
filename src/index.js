@@ -13,7 +13,7 @@ const foodList = document.querySelector("#food-list")
 
 form.addEventListener("submit", event => {
     event.preventDefault();
-    API.post("",{
+    API.post("/",{
     fields: {
     name: { stringValue: name.value },
     carbs: { integerValue: carbs.value },

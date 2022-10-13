@@ -1,8 +1,8 @@
 import FetchWrapper from "./fetch-wrapper"
-
+const API =  new FetchWrapper("https://firestore.googleapis.com/v1/projects/mynutrition-753b5/databases/(default)/documents/foods/")
 
 const form = document.querySelector("#create-form")
-const nameDropdown = document.querySelector("#create-name")
+const name = document.querySelector("#create-name")
 const carbs = document.querySelector("#create-carbs")
 const protein = document.querySelector("#create-protein")
 const fat = document.querySelector("#create-fat")
@@ -11,18 +11,34 @@ const foodList = document.querySelector("#food-list")
 
 form.addEventListener("submit", event => {
     event.preventDefault();
-    API.post("food",{
+    API.post("/",{
     fields: {
-    name: { stringValue: nameDropdown.value },
+    name: { stringValue: name.value },
     carbs: { integerValue: carbs.value },
     protein: { integerValue: protein.value },
     fat: { integerValue: fat.value }
   }}).then(data => 
   {
-      const error = data.error
+    foodList.insertAdjacentHTML("beforeend",`
+    <li class="card">
+  <div>
+    <h3 class="name">${name.value.toLowerCase()}</h3>
+    <div class="calories">0 calories</div>
+    <ul class="macros">
+      <li class="carbs"><div>Carbs</div><div class="value">${carbs.value}g</div></li>
+      <li class="protein"><div>Protein</div><div class="value">${protein.value}g</div></li>
+      <li class="fat"><div>Fat</div><div class="value">${fat.value}g</div></li>
+    </ul>
+  </div>
+</li>`);
       if(!error){
-          form.reset()
+        // there was an error
+          return;
       }
+      name.value = "";
+      carbs.value = "";
+      protein.value = "";
+      fat.value = "";
   }
   )
 })

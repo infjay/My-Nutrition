@@ -23,7 +23,7 @@ form.addEventListener("submit", event => {
   }}).then(data => 
   { console.log(data);
 
-      if(!error){
+      if(data.error){
         throw Error ("there was an error with API.Post")
           return;
       }

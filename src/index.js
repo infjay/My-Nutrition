@@ -51,7 +51,9 @@ const renderChart = () => {
           label: "Macronutrients",
           data: [appData.getTotalCarbs(), appData.getTotalProtein(), appData.getTotalFat()],
           backgroundColor: ["#25AEEE", "#FECD52", "#57D269"],
-          borderWidth: 3, // example of other customization
+          borderWidth: 2,
+          borderColor: "#000",
+          // example of other customization
         },
       ],
     },
@@ -100,8 +102,9 @@ form.addEventListener("submit", event => {
 const init = () => {
   // Get the saved entries and list them
   API.get("").then((data) => {data.documents?.forEach((data) => {
-
+    
     const fields = data.fields;
+   
     // refactor into displayEntry
     displayEntry(
       fields.name.stringValue,
@@ -109,8 +112,9 @@ const init = () => {
       fields.protein.integerValue,
       fields.fat.integerValue 
     );
+      renderChart()
   });
-  renderChart();
+  ;
 })
 }
 
